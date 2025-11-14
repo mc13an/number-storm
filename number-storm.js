@@ -77,7 +77,7 @@ class NumberStorm {
       const elapsed = ((Date.now() - this.startTime) / 1000).toFixed(1);
       console.log(`${colors.cyan}Time:${colors.reset} ${colors.bright}${elapsed}s${colors.reset}`);
     }
-    console.log('');
+    console.log(`\n${colors.dim}Type 'q' to quit${colors.reset}`);
   }
 
   startChallenge() {
@@ -106,6 +106,12 @@ class NumberStorm {
         process.stdin.pause();
 
         console.log(''); // Move to next line
+
+        // Check for quit command
+        if (answer.toLowerCase() === 'q') {
+          console.log(`\n${colors.yellow}Game ended. Thanks for playing!${colors.reset}\n`);
+          process.exit(0);
+        }
 
         const userNumber = parseInt(answer);
         const correctNumber = this.numbers[this.currentIndex];
@@ -138,8 +144,8 @@ class NumberStorm {
         if (answer.length > 0) {
           answer = answer.slice(0, -1);
         }
-      } else if (/\d/.test(char)) {
-        // Only accept digits
+      } else if (/\d/.test(char) || char.toLowerCase() === 'q') {
+        // Accept digits or 'q' for quit
         answer += char;
       }
     };
@@ -259,7 +265,8 @@ class NumberStorm {
     console.log(`${colors.dim}2.${colors.reset} Type it using your number row`);
     console.log(`${colors.dim}3.${colors.reset} Press Enter to submit`);
     console.log(`${colors.dim}4.${colors.reset} Complete all ${colors.yellow}10 numbers${colors.reset} as fast as you can!`);
-    console.log(`${colors.dim}5.${colors.reset} ${colors.green}Mistakes are OK${colors.reset} - keep going for your score!\n`);
+    console.log(`${colors.dim}5.${colors.reset} ${colors.green}Mistakes are OK${colors.reset} - keep going for your score!`);
+    console.log(`${colors.dim}6.${colors.reset} Type ${colors.yellow}'q'${colors.reset} anytime to quit\n`);
 
     process.stdout.write(`${colors.dim}Press ENTER to begin...${colors.reset}`);
     process.stdin.setRawMode(true);
